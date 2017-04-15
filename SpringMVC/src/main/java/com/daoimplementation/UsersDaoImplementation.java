@@ -10,6 +10,9 @@ import java.util.List;
 import com.dao.UserDao;
 import com.entities.Users;
 
+/**
+ * Implementation of User Dao 
+ */
 @Repository
 @Transactional
 public class UsersDaoImplementation implements UserDao{
@@ -17,29 +20,43 @@ public class UsersDaoImplementation implements UserDao{
 	@Autowired
 	SessionFactory session;
 	
+	/**
+     * Saves or updates the users.
+     *
+     * @param users User object to be added or updated
+     */
 	public boolean saveOrUpdate(Users users) {
-		// TODO Auto-generated method stub
 		session.getCurrentSession().saveOrUpdate(users);
 		return true;
 	}
 	
-	// For getting the current session
+	
+	/**
+     * Gets the current session.
+     */
 	public List<Users> list() {
-		return session.getCurrentSession().createQuery("from Users").list();
+		List<Users> list = session.getCurrentSession().createQuery("from Users").list();
+		return list;
 	}
 	
-	// For searching the usser
+	/**
+     * Searches the users.
+     * @param userId, UserID to be used for searching  
+     */
 	public Users SearchById (Integer userId ) {
 		List<Users> returnedUsers = session.getCurrentSession().createQuery("from Users where user_id = " + userId).list();
 		if(!returnedUsers.isEmpty())
 		{
-			return (Users) returnedUsers.get(0);
+			return returnedUsers.get(0);
 		}
 		
 		return null;
 	}
 	
-	// Deletes the User
+	/**
+     * Deletes the users.
+     * @param userId, UserID to be used for deleting  
+     */
 	public boolean delete(Users users) {
 		try{
 			session.getCurrentSession().delete(users);
