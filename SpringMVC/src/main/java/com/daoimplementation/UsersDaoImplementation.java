@@ -22,11 +22,13 @@ public class UsersDaoImplementation implements UserDao{
 		session.getCurrentSession().saveOrUpdate(users);
 		return true;
 	}
-
+	
+	// For getting the current session
 	public List<Users> list() {
 		return session.getCurrentSession().createQuery("from Users").list();
 	}
-
+	
+	// For searching the usser
 	public Users SearchById (Integer userId ) {
 		List<Users> returnedUsers = session.getCurrentSession().createQuery("from Users where user_id = " + userId).list();
 		if(!returnedUsers.isEmpty())
@@ -36,6 +38,8 @@ public class UsersDaoImplementation implements UserDao{
 		
 		return null;
 	}
+	
+	// Deletes the User
 	public boolean delete(Users users) {
 		try{
 			session.getCurrentSession().delete(users);
